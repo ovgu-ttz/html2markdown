@@ -17,7 +17,7 @@ class Html2MarkdownParser(HTMLParser):
         self._tag_attr_data = {}
         self._handled_tag_body_data = ''
         self._convertible_tags = ['a',
-                                  'b', 'blockquote',
+                                  'b', 'i', 'blockquote',
                                   'em',
                                   'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'hr',
                                   'ol',
@@ -55,7 +55,12 @@ class Html2MarkdownParser(HTMLParser):
     # <b />
     def handle_end_b(self):
         self._handled_tag_body_data = self._handled_tag_body_data.replace(os.linesep, ' ')
-        self._append_to_markdown('*' + self._handled_tag_body_data + '*')
+        self._append_to_markdown('**' + self._handled_tag_body_data + '**')
+
+    # <i />
+    def handle_end_i(self):
+        self._handled_tag_body_data = self._handled_tag_body_data.replace(os.linesep, ' ')
+        self._append_to_markdown('_' + self._handled_tag_body_data + '_')
 
     # <blockquote />
     def handle_end_blockquote(self):
