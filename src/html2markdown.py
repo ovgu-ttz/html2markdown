@@ -146,14 +146,14 @@ class Html2MarkdownParser(HTMLParser):
     def handle_starttag(self, tag, attrs):
         self._tag_stack.append(tag)
         try:
-            eval('self.handle_start_' + tag + '(attrs)')
+            getattr(self, 'handle_start_%s' % tag)(attrs)
         except AttributeError as e:
             pass
 
     def handle_endtag(self, tag):
         self._tag_stack.pop()
         try:
-            eval('self.handle_end_' + tag + '()')
+            getattr(self, 'handle_end_%s' % tag)()
             # Collapse three successive CRs into two before moving on
             while len(self._markdown) > 2 and \
                     self._markdown[-3:] == '%s%s%s' % (os.linesep, os.linesep, os.linesep):
