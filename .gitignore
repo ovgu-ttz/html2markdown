@@ -1,0 +1,53 @@
+
+# Python Cache Objects
+*.pyc
+*.pyo
+*.pyd
+
+# 2to3
+*.py.bak
+
+# C extensions
+*.so
+
+# Packages
+*.egg
+*.egg-info
+dist
+build
+eggs
+parts
+src
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+lib
+lib64
+__pycache__
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+nosetests.xml
+
+# Mr Developer
+.mr.developer.cfg
+.project
+.pydevproject
+
+# IntelliJ IDEA
+.idea
+
+# NoHUP
+nohup.out
+
+# Eclipse settings folder
+/.settings
+
+# npm
+npm-debug.log
