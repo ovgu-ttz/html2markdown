@@ -1,11 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/python3.3
+# -*- coding: utf-8 -*-
+"""
 
-from HTMLParser import HTMLParser
+"""
+from html.parser import HTMLParser
 
 import re
 import os
 import sys
-import string
+
 
 class Html2MarkdownParser(HTMLParser):
     def __init__(self):
@@ -139,7 +142,7 @@ class Html2MarkdownParser(HTMLParser):
         self._tag_stack.append(tag)
         try:
             eval('self.handle_start_' + tag + '(attrs)')
-        except AttributeError, e:
+        except AttributeError as e:
             pass
 
     def handle_endtag(self, tag):
@@ -150,14 +153,14 @@ class Html2MarkdownParser(HTMLParser):
             while len(self._markdown) > 2 and \
                     self._markdown[-3:] == '%s%s%s' % (os.linesep, os.linesep, os.linesep):
                 self._markdown = self._markdown[:-3] + '%s%s' % (os.linesep, os.linesep)
-        except AttributeError, e:
+        except AttributeError as e:
             pass
 
         self._tag_attr_data = {}
         self._handled_tag_body_data = ''
 
     def handle_data(self, data):
-        data = os.linesep.join(map(string.strip, data.strip().split(os.linesep)))
+        data = os.linesep.join([s.strip() for s in data.strip().split(os.linesep)])
         if len(self._tag_stack) and self._tag_stack[-1] not in ['p']:
             self._handled_tag_body_data += data
         else:
@@ -171,7 +174,7 @@ def main():
     buf = sys.stdin.read()
     p.feed(buf)
     p.close()
-    print p.get_markdown()
+    print(p.get_markdown())
 
 if __name__ == "__main__":
     sys.exit(main())
